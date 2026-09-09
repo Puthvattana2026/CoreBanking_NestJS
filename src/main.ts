@@ -6,10 +6,7 @@ dotenv.config({path: 'default.env'});
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const allowedOrigins = (
-    process.env.CORS_ORIGIN ??
-    'http://localhost:5500'
-  )
+  const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:5500')
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
