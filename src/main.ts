@@ -5,8 +5,11 @@ import * as dotenv from 'dotenv';
 dotenv.config({path: 'default.env'});
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
-  const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://127.0.0.1:5500')
+
+  const allowedOrigins = (
+    process.env.CORS_ORIGIN ??
+    'http://localhost:5500'
+  )
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
@@ -23,9 +26,8 @@ async function bootstrap() {
 
       callback(new Error('Origin not allowed by CORS'), false);
     },
-    credentials: true,
   });
-  
-  await app.listen(process.env.PORT ?? 3000);
+
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }
 bootstrap();
