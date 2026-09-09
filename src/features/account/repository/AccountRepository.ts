@@ -29,6 +29,13 @@ export class AccountRepository{
         return this.accountRepository.find();
     }
 
+    findAllTransferByAccount(accountNumber: number): Promise<Account | null> {
+        return this.accountRepository.findOne({
+            where: { accountNumber },
+            relations: { transfers: true },
+        });
+    }
+
     save(account: Account): Promise<Account>{
         return this.accountRepository.save(account);
     }

@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UUID } from "typeorm/driver/mongodb/bson.typings.js";
 import { AccountType } from "../enums/AccountType";
 import { IsNotEmpty } from "class-validator";
+import { Transfer } from "../../transfer/entity/transfer.entity";
 
 @Entity()
 export class Account {
@@ -11,6 +12,9 @@ export class Account {
 
     @Column({nullable: false})
     accountNumber: number;
+
+    @OneToMany(() => Transfer, (transfer) => transfer.account)
+    transfers: Transfer[];
 
     @Column({
         type: 'enum',

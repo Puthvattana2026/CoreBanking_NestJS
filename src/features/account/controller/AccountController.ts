@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import type { AccountService } from "../service/account.service";
 import { AccountMapper } from "../mapper/AccountMapper";
 import { AccountResponse } from "../dto/AccountResponse.dto";
@@ -10,7 +10,7 @@ import { Account } from "../entity/account.entity";
 export class AccountController {
 
     constructor(
-         @Inject('AccountService') private readonly accountService: AccountService,
+        @Inject('AccountService') private readonly accountService: AccountService,
         private readonly accountMapper: AccountMapper,
     ) {}
 
@@ -18,6 +18,11 @@ export class AccountController {
     async createAccount(): Promise<AccountResponse[]> {
         const { usdAccount, khrAccount } = await this.accountService.createAccount();
         return [usdAccount, khrAccount].map((acc) => this.accountMapper.toAccountResponse(acc));
+    }
+
+    @Get('/history/:id')
+    async accountHistory(@Param('id', ParseIntPipe) id: number): Promise<Account | null> {
+        return this.accountService.findAllTransferByAccountNumber(id);
     }
 
     @Post()

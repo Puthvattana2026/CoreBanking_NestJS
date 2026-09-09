@@ -21,6 +21,10 @@ export class AccountServiceImpl implements AccountService {
         return this.accountRepository.findAllAccount();
     }
 
+    findAllTransferByAccountNumber(accountNumber: number): Promise<Account | null>{
+        return this.accountRepository.findAllTransferByAccount(accountNumber);
+    }
+
     async createAccount(): Promise<{ usdAccount: Account; khrAccount: Account }>{
         const min = 1_000_000;
         const max = 9_000_000;
