@@ -6,10 +6,7 @@ dotenv.config({path: 'default.env'});
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:5500')
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean);
+  const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:5500');
 
   app.enableCors({
     origin: (
@@ -17,7 +14,7 @@ async function bootstrap() {
       callback: (error: Error | null, allow?: boolean) => void,
     ) => {
       if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
-        callback(null, true);
+          callback(null, true);
         return;
       }
 
