@@ -6,7 +6,7 @@ dotenv.config({path: 'default.env'});
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  const allowedOrigins = (process.env.CORS_ORIGIN ?? 'https://core-banking-nest-js-html.vercel.app,http://localhost:5500,http://127.0.0.1:5500')
+  const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://127.0.0.1:5500')
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
