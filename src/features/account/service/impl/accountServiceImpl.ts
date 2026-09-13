@@ -63,6 +63,10 @@ export class AccountServiceImpl implements AccountService {
     }
 
     async depositMoney(request: Account): Promise<Account> {
+        if (request.accountNumber == null || request.accountType == null) {
+            throw new BadRequestException('accountNumber and accountType are required');
+        }
+
         const account = await this.accountRepository.findOneByAccountNumberAndType(
             request.accountNumber,
             request.accountType,

@@ -8,20 +8,23 @@ async function bootstrap() {
 
   const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:5500');
 
-  app.enableCors({
-    origin: (
-      requestOrigin: string | undefined,
-      callback: (error: Error | null, allow?: boolean) => void,
-    ) => {
-      if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
-          callback(null, true);
-        return;
-      }
+  app.enableCors(
+    {
+      origin: (
+        requestOrigin: string | undefined, // the Origin header of the incoming request
+        callback: (error: Error | null, allow?: boolean) => void // callback
+      ) => {
+        
+        if (!requestOrigin || allowedOrigins.includes(requestOrigin)) { 
+            callback(null, true);
+          return;
+        } // service talk to service
 
-      callback(new Error('Origin not allowed by CORS'), false);
-    },
-  });
+        callback(new Error('Origin not allowed by CORS'), false); // check cross platform
+      },
+    }
+  );
 
-  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0'); 
 }
 bootstrap();

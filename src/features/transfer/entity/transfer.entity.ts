@@ -1,15 +1,19 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UUID } from "typeorm/driver/mongodb/bson.typings.js";
 import { Currency } from "../enums/Currency";
 import { IsNotEmpty } from "class-validator";
 import { Account } from "../../account/entity/account.entity";
 import { from } from "rxjs";
+import { Transaction } from "./transaction.entity";
 
 @Entity()
 export class Transfer {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @CreateDateColumn()
+    createdAt: Date;
 
     @Column({ type: 'varchar', length: 50 })
     transactionId: string;
@@ -47,16 +51,6 @@ export class Transfer {
     @Column()
     message: string;
 
-    @Column()
-    toAccount: number;
-
-    @ManyToOne(() => Account)
-    @JoinColumn({ name: 'accountId' })
-    account: Account;
-
-    @Column()
-    fromAccount: number;
-
     @Column({    
         type: 'enum',
         enum: Currency,
@@ -69,4 +63,12 @@ export class Transfer {
 
     @Column('decimal')
     exchangeRate: number;
+
+    @ManyToOne(() => Account)
+    @JoinColumn({ name: 'sourceAccountId' })
+    sourceAccount: Account;
+
+    @ManyToOne(() => Account)
+    @JoinColumn({ name: 'destinationAccountId' })
+    destinationAccount: Account;
 }

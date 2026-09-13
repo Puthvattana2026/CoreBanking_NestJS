@@ -32,7 +32,10 @@ export class AccountRepository{
     findAllTransferByAccount(accountNumber: number): Promise<Account | null> {
         return this.accountRepository.findOne({
             where: { accountNumber },
-            relations: { transfers: true },
+            relations: {
+                sentTransfers: true,
+                receivedTransfers: true,
+            },
         });
     }
 

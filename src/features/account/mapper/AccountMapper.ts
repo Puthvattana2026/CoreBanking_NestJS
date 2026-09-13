@@ -15,7 +15,7 @@ export class AccountMapper {
         const account = new Account();
         
         account.accountType = accountRequest.accountType;
-        account.accountNumber = accountRequest.accaccountNumber;
+        account.accountNumber = accountRequest.accountNumber;
         account.deposit = accountRequest.deposit;
         account.credit = account.deposit;
         account.balance = account.balance;

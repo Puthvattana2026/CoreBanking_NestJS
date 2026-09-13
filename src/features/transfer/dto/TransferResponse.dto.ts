@@ -1,5 +1,6 @@
 import { Column } from "typeorm";
 import { Currency } from "../enums/Currency";
+import { Account } from "../../account/entity/account.entity";
 
 export class TransferRespone {
     id: string;

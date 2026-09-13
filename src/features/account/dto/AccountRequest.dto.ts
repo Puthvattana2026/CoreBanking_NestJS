@@ -3,6 +3,6 @@ import { AccountType } from "../enums/AccountType";
 
 export class AccountRequest {
     accountType: AccountType;
-    accaccountNumber: number; 
+    accountNumber: number; 
     deposit: number;
 }

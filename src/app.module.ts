@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { Account } from './features/account/entity/account.entity';
 import { Transfer } from './features/transfer/entity/transfer.entity';
+import { Transaction } from './features/transfer/entity/transaction.entity';
 import { TransferModule } from './features/transfer/transfer.module';
 import { AccountModule} from './features/account/account.module';
 
@@ -16,13 +15,13 @@ import { AccountModule} from './features/account/account.module';
       username: 'vattanaputh_test',
       password: 'nanaSQL',
       database: 'nest',
-      entities: [Account, Transfer],
+      entities: [Account, Transfer, Transaction],
       synchronize: true
     }),
     AccountModule,
     TransferModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

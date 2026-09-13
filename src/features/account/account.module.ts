@@ -8,7 +8,9 @@ import { Account } from './entity/account.entity';
 
 @Module(
     {
-        imports: [TypeOrmModule.forFeature([Account])],
+        imports: [
+            TypeOrmModule.forFeature([Account])
+        ],
         controllers: [AccountController],
         exports: [AccountRepository],
         providers: [

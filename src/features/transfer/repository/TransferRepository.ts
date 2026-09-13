@@ -1,5 +1,5 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { MoreThanOrEqual, Repository } from "typeorm";
 import { Account } from "../../account/entity/account.entity";
 import { Transfer } from "../entity/transfer.entity";
 import { Injectable } from "@nestjs/common";
@@ -16,6 +16,20 @@ export class TransferRepository {
 
     findAll(): Promise<Transfer[]> {
         return this.transferRepository.find();
+    }
+
+    async getDailyOutgoingStats(accountId: string, startOfDay: Date): Promise<{ count: number; amount: number }> {
+        const transfers = await this.transferRepository.find({
+            where: {
+                sourceAccount: { id: accountId },
+                createdAt: MoreThanOrEqual(startOfDay),
+            },
+        });
+
+        return {
+            count: transfers.length,
+            amount: transfers.reduce((total, transfer) => total + Number(transfer.debit || 0), 0),
+        };
     }
 
     save(transfer: Transfer): Promise<Transfer> {
